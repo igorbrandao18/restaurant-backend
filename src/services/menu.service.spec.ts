@@ -1,25 +1,137 @@
+import { Test, TestingModule } from '@nestjs/testing';
 import { MenuService } from './menu.service';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-const menuService = new MenuService();
+import { PrismaService } from '../prisma/prisma.service';
+import { MenuDto } from '../dto/menu.dto';
 
 describe('MenuService', () => {
-  it('should create a menu', async () => {
-    const menuData = { restaurantId: 1, name: 'Test Menu', sections: {} };
-    const menu = await menuService.createMenu(menuData);
-    expect(menu).toHaveProperty('id');
+  let service: MenuService;
+  let prismaService: PrismaService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        MenuService,
+        {
+          provide: PrismaService,
+          useValue: {
+            menu: {
+              create: jest.fn(),
+              findMany: jest.fn(),
+              update: jest.fn(),
+            },
+          },
+        },
+      ],
+    }).compile();
+
+    service = module.get<MenuService>(MenuService);
+    prismaService = module.get<PrismaService>(PrismaService);
   });
 
-  it('should get all menus', async () => {
-    const menus = await menuService.getAllMenus();
-    expect(Array.isArray(menus)).toBe(true);
+  it('should be defined', () => {
+    expect(service).toBeDefined();
   });
 
-  it('should update a menu', async () => {
-    const menuData = { restaurantId: 1, name: 'Updated Menu', sections: {} };
-    const menu = await menuService.createMenu(menuData);
-    const updatedMenu = await menuService.updateMenu(menu.id, { restaurantId: 1, name: 'New Menu Name', sections: {} });
-    expect(updatedMenu.name).toBe('New Menu Name');
+  describe('createMenu', () => {
+    it('should create a menu', async () => {
+      const menuData: MenuDto = {
+        id: 1,
+        restaurantId: 1,
+        name: 'Test Menu',
+        type: 'REGULAR',
+        collapse: 0,
+        sections: {
+          sections: [
+            {
+              id: 1,
+              name: 'Test Section',
+              description: 'Test Section Description',
+              position: 0,
+              visible: 1,
+              images: [
+                {
+                  id: 1,
+                  image: 'https://example.com/image.jpg',
+                },
+              ],
+              items: [
+                {
+                  id: 1,
+                  name: 'Test Item',
+                  description: 'Test Description',
+                  alcoholic: 0,
+                  price: 10.00,
+                  position: 0,
+                  visible: 1,
+                  availabilityType: 'AVAILABLE_NOW',
+                  sku: 'TEST123',
+                  images: [],
+                  modifiers: [],
+                  available: true,
+                },
+              ],
+            },
+          ],
+        },
+      };
+
+      const mockMenu = {
+        id: 1,
+        restaurantId: menuData.restaurantId,
+        name: menuData.name,
+        type: menuData.type,
+        collapse: menuData.collapse,
+        sections: menuData.sections,
+      };
+
+      jest.spyOn(prismaService.menu, 'create').mockResolvedValue(mockMenu);
+
+      const result = await service.createMenu(menuData);
+      expect(result).toEqual(mockMenu);
+    });
+  });
+
+  describe('getAllMenus', () => {
+    it('should return an array of menus', async () => {
+      const mockMenus = [{
+        id: 1,
+        restaurantId: 1,
+        name: 'Test Menu',
+        type: 'REGULAR',
+        collapse: 0,
+        sections: {
+          sections: [],
+        },
+      }];
+
+      jest.spyOn(prismaService.menu, 'findMany').mockResolvedValue(mockMenus);
+      const result = await service.getAllMenus();
+      expect(result).toEqual(mockMenus);
+    });
+  });
+
+  describe('updateMenu', () => {
+    it('should update a menu', async () => {
+      const id = 1;
+      const updateData: MenuDto = {
+        id: 1,
+        restaurantId: 1,
+        name: 'Updated Menu',
+        type: 'REGULAR',
+        collapse: 0,
+        sections: {
+          sections: [],
+        },
+      };
+
+      const mockUpdatedMenu = {
+        ...updateData,
+      };
+
+      jest.spyOn(prismaService.menu, 'update').mockResolvedValue(mockUpdatedMenu);
+
+      const result = await service.updateMenu(id, updateData);
+      expect(result).toEqual(mockUpdatedMenu);
+    });
   });
 }); 
