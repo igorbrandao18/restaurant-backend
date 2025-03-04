@@ -32,6 +32,8 @@ model Menu {
   restaurant  Restaurant @relation("RestaurantMenus", fields: [restaurantId], references: [id])
   restaurantId Int
   name        String
+  type        String
+  collapse    Int
   sections    Json
 }
 

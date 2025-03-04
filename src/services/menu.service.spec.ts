@@ -35,10 +35,9 @@ describe('MenuService', () => {
   describe('createMenu', () => {
     it('should create a menu', async () => {
       const menuData: MenuDto = {
-        id: 1,
         restaurantId: 1,
         name: 'Test Menu',
-        type: 'REGULAR',
+        type: 'MENU',
         collapse: 0,
         sections: {
           sections: [
@@ -97,7 +96,7 @@ describe('MenuService', () => {
         id: 1,
         restaurantId: 1,
         name: 'Test Menu',
-        type: 'REGULAR',
+        type: 'MENU',
         collapse: 0,
         sections: {
           sections: [],
@@ -114,10 +113,9 @@ describe('MenuService', () => {
     it('should update a menu', async () => {
       const id = 1;
       const updateData: MenuDto = {
-        id: 1,
         restaurantId: 1,
         name: 'Updated Menu',
-        type: 'REGULAR',
+        type: 'MENU',
         collapse: 0,
         sections: {
           sections: [],
@@ -125,6 +123,7 @@ describe('MenuService', () => {
       };
 
       const mockUpdatedMenu = {
+        id,
         ...updateData,
       };
 

@@ -9,9 +9,10 @@ import { AddressController } from './controllers/address.controller';
 import { AddressService } from './services/address.service';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [],
+  imports: [PrismaModule],
   controllers: [RestaurantController, MenuController, OrderController, AddressController, AuthController],
   providers: [RestaurantService, MenuService, OrderService, AddressService, AuthService],
 })

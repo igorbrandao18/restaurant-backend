@@ -8,6 +8,12 @@ export class MenuDto {
   @IsNotEmpty()
   name: string;
 
+  @IsString()
+  type: string;
+
+  @IsNumber()
+  collapse: number;
+
   @IsObject()
   sections: any;
 } 
