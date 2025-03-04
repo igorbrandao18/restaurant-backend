@@ -1,7 +1,9 @@
-import { Controller, Post, Get, Put, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Put, Body, Param, UseGuards, Req, NotFoundException, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { RestaurantService } from '../services/restaurant.service';
 import { RestaurantDto } from '../dto/restaurant.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../services/jwt-auth.guard';
+import { Request } from 'express';
 
 @ApiTags('restaurants')
 @Controller('restaurants')
@@ -37,6 +39,8 @@ export class RestaurantController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Atualizar um restaurante existente' })
   @ApiParam({ 
     name: 'id', 
@@ -53,11 +57,104 @@ export class RestaurantController {
     description: 'Dados inválidos'
   })
   @ApiResponse({ 
+    status: 401, 
+    description: 'Não autorizado'
+  })
+  @ApiResponse({ 
+    status: 403, 
+    description: 'Acesso negado'
+  })
+  @ApiResponse({ 
     status: 404, 
     description: 'Restaurante não encontrado'
   })
-  async update(@Param('id') id: string, @Body() restaurantData: RestaurantDto) {
+  async update(@Param('id') id: string, @Body() restaurantData: RestaurantDto, @Req() req: Request) {
+    if (!req.user?.id) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+
+    // Check if user is trying to update their own data
+    if (req.user.id !== +id) {
+      throw new ForbiddenException('Cannot update other restaurant\'s data');
+    }
+
+    // Check if the restaurant exists
+    const existingRestaurant = await this.restaurantService.getRestaurantById(+id);
+    if (!existingRestaurant) {
+      throw new NotFoundException('Restaurant not found');
+    }
+
     const updatedRestaurant = await this.restaurantService.updateRestaurant(+id, restaurantData);
-    return { status: 200, updatedRestaurant };
+    return { status: 200, restaurant: updatedRestaurant };
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get a restaurant by ID' })
+  @ApiParam({ name: 'id', description: 'ID of the restaurant', type: 'number' })
+  @ApiResponse({ status: 200, description: 'Restaurant found', type: RestaurantDto })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Restaurant not found' })
+  async getById(@Param('id') id: string, @Req() req: Request) {
+    if (!req.user?.id) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+
+    // Check if user is trying to access their own data
+    if (req.user.id !== +id) {
+      throw new ForbiddenException('Cannot access other restaurant\'s data');
+    }
+
+    const restaurant = await this.restaurantService.getRestaurantById(+id);
+    if (!restaurant) {
+      throw new NotFoundException('Restaurant not found');
+    }
+
+    return { status: 200, restaurant };
+  }
+
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get authenticated restaurant profile' })
+  @ApiResponse({ status: 200, description: 'Profile retrieved successfully', type: RestaurantDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async getProfile(@Req() req: Request) {
+    if (!req.user?.id) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+    const restaurant = await this.restaurantService.getRestaurantById(req.user.id);
+    if (!restaurant) {
+      throw new NotFoundException('Restaurant not found');
+    }
+    return { status: 200, restaurant };
+  }
+
+  @Get(':id/menus')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get restaurant menus' })
+  @ApiParam({ name: 'id', description: 'ID of the restaurant', type: 'number' })
+  @ApiResponse({ status: 200, description: 'Menus retrieved successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Restaurant not found' })
+  async getMenus(@Param('id') id: string, @Req() req: Request) {
+    if (!req.user?.id) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+    const restaurant = await this.restaurantService.getRestaurantById(+id);
+    if (!restaurant) {
+      throw new NotFoundException('Restaurant not found');
+    }
+    
+    // Check if the authenticated restaurant is trying to access its own menus
+    if (req.user.id !== restaurant.id) {
+      throw new ForbiddenException('Cannot access other restaurant\'s menus');
+    }
+    
+    const menus = await this.restaurantService.getRestaurantMenus(+id);
+    return { status: 200, menus };
   }
 }

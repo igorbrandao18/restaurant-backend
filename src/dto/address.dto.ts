@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AddressDto {
@@ -10,11 +10,10 @@ export class AddressDto {
   customerId: number;
 
   @ApiProperty({
-    description: 'Linha de endereço (rua, número, complemento)',
+    description: 'Endereço completo (rua, número, complemento)',
     example: 'Rua das Flores, 123, Apto 101'
   })
   @IsString()
-  @IsNotEmpty()
   addressLine: string;
 
   @ApiProperty({
@@ -22,7 +21,6 @@ export class AddressDto {
     example: 'Bauru'
   })
   @IsString()
-  @IsNotEmpty()
   city: string;
 
   @ApiProperty({
@@ -30,6 +28,5 @@ export class AddressDto {
     example: '17012-360'
   })
   @IsString()
-  @IsNotEmpty()
   postalCode: string;
 } 

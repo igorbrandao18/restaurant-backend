@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MenuService } from './menu.service';
-import { PrismaService } from '../prisma/prisma.service';
-import { MenuDto } from '../dto/menu.dto';
+import { MenuService } from '../../../src/services/menu.service';
+import { PrismaService } from '../../../src/prisma/prisma.service';
+import { MenuDto } from '../../../src/dto/menu.dto';
 
 describe('MenuService', () => {
   let service: MenuService;

@@ -22,6 +22,12 @@ export class MenuService {
     return await this.prisma.menu.findMany();
   }
 
+  async getMenuById(id: number) {
+    return await this.prisma.menu.findUnique({
+      where: { id },
+    });
+  }
+
   async updateMenu(id: number, data: MenuDto) {
     return await this.prisma.menu.update({
       where: { id },

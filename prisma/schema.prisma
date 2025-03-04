@@ -44,6 +44,7 @@ model Order {
   customerId  Int
   items       Json
   total       Float
+  status      String
 }
 
 model Address {

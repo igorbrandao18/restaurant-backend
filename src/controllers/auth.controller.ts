@@ -1,6 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
-import { AuthDto } from '../dto/auth.dto';
+import { LoginDto } from '../dto/login.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('auth')
@@ -24,8 +24,8 @@ export class AuthController {
     status: 401, 
     description: 'Credenciais inválidas'
   })
-  async login(@Body() authData: AuthDto) {
-    const token = await this.authService.login(authData);
-    return { status: 200, token };
+  async login(@Body() loginData: LoginDto) {
+    const result = await this.authService.login(loginData);
+    return { status: 200, ...result };
   }
 } 

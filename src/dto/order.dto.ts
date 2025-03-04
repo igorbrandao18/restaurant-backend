@@ -1,5 +1,24 @@
-import { IsNumber, IsObject } from 'class-validator';
+import { IsNumber, IsArray, ValidateNested, IsString, IsEnum } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+
+export class OrderItemDto {
+  @IsNumber()
+  menuItemId: number;
+
+  @IsNumber()
+  quantity: number;
+}
+
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  PREPARING = 'PREPARING',
+  READY = 'READY',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+  ACCEPTED = 'ACCEPTED',
+  DELIVERED = 'DELIVERED'
+}
 
 export class OrderDto {
   @ApiProperty({
@@ -29,8 +48,7 @@ export class OrderDto {
       ]
     }
   })
-  @IsObject()
-  items: any;
+  items: { items: OrderItemDto[] };
 
   @ApiProperty({
     description: 'Valor total do pedido',
@@ -38,4 +56,12 @@ export class OrderDto {
   })
   @IsNumber()
   total: number;
+
+  @ApiProperty({
+    description: 'Status do pedido',
+    enum: OrderStatus,
+    example: OrderStatus.PENDING
+  })
+  @IsEnum(OrderStatus)
+  status: OrderStatus;
 } 
