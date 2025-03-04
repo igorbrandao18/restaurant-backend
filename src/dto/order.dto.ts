@@ -3,11 +3,30 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class OrderItemDto {
+  @ApiProperty({
+    description: 'ID do item do menu',
+    example: 1
+  })
   @IsNumber()
   menuItemId: number;
 
+  @ApiProperty({
+    description: 'Quantidade do item',
+    example: 2
+  })
   @IsNumber()
   quantity: number;
+}
+
+export class OrderItemsDto {
+  @ApiProperty({
+    description: 'Lista de itens do pedido',
+    type: [OrderItemDto]
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => OrderItemDto)
+  items: OrderItemDto[];
 }
 
 export enum OrderStatus {
@@ -37,18 +56,11 @@ export class OrderDto {
 
   @ApiProperty({
     description: 'Itens do pedido',
-    example: {
-      items: [
-        {
-          menuId: 1,
-          quantity: 2,
-          price: 25.90,
-          notes: 'Sem cebola'
-        }
-      ]
-    }
+    type: OrderItemsDto
   })
-  items: { items: OrderItemDto[] };
+  @ValidateNested()
+  @Type(() => OrderItemsDto)
+  items: OrderItemsDto;
 
   @ApiProperty({
     description: 'Valor total do pedido',

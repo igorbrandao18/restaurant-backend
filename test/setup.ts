@@ -7,7 +7,9 @@ beforeAll(async () => {
   await prisma.$connect();
   await prisma.order.deleteMany();
   await prisma.menu.deleteMany();
+  await prisma.auth.deleteMany();
   await prisma.restaurant.deleteMany();
+  await prisma.address.deleteMany();
 });
 
 afterAll(async () => {

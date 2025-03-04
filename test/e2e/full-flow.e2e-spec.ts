@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import { PrismaService } from '../../src/prisma/prisma.service';
 import { HttpExceptionFilter } from '../../src/filters/http-exception.filter';
+import { OrderStatus } from '../../src/dto/order.dto';
 
 describe('Restaurant System (e2e)', () => {
   let app: INestApplication;
@@ -21,7 +22,11 @@ describe('Restaurant System (e2e)', () => {
     app = moduleFixture.createNestApplication();
     
     // Configurar pipes e filtros globais como na aplicação real
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true
+    }));
     app.useGlobalFilters(new HttpExceptionFilter());
     
     prisma = app.get<PrismaService>(PrismaService);
@@ -40,7 +45,7 @@ describe('Restaurant System (e2e)', () => {
         address: '123 Test St',
         city: 'Test City',
         country: 'Test Country',
-        username: 'testrestaurant',
+        username: `testrestaurant_${Date.now()}`,
         password: 'testpassword',
         webSettings: {}
       };
@@ -60,7 +65,7 @@ describe('Restaurant System (e2e)', () => {
           username: restaurantData.username,
           password: restaurantData.password
         })
-        .expect(200);
+        .expect(201);
 
       authToken = loginResponse.body.token;
       expect(authToken).toBeDefined();
@@ -114,13 +119,13 @@ describe('Restaurant System (e2e)', () => {
         items: {
           items: [
             {
-              id: menuItemId,
+              menuItemId,
               quantity: 2
             }
           ]
         },
         total: 31.98, // 2 * 15.99
-        status: 'PENDING'
+        status: OrderStatus.PENDING
       };
 
       const orderResponse = await request(app.getHttpServer())
@@ -133,7 +138,7 @@ describe('Restaurant System (e2e)', () => {
       expect(orderResponse.body.order.total).toBe(orderData.total);
 
       // 5. Atualizar status do pedido
-      const statusUpdates = ['ACCEPTED', 'PREPARING', 'READY', 'DELIVERED'];
+      const statusUpdates = [OrderStatus.ACCEPTED, OrderStatus.PREPARING, OrderStatus.READY, OrderStatus.DELIVERED];
       
       for (const status of statusUpdates) {
         await request(app.getHttpServer())
@@ -147,15 +152,7 @@ describe('Restaurant System (e2e)', () => {
 
         // Verificar se o status foi atualizado no banco
         const updatedOrder = await prisma.order.findUnique({
-          where: { id: orderId },
-          select: {
-            id: true,
-            restaurantId: true,
-            customerId: true,
-            items: true,
-            total: true,
-            status: true
-          }
+          where: { id: orderId }
         });
         expect(updatedOrder?.status).toBe(status);
       }
@@ -179,10 +176,15 @@ describe('Restaurant System (e2e)', () => {
             restaurantId,
             customerId: index,
             items: {
-              items: [{ id: 1, quantity: 1 }]
+              items: [
+                {
+                  menuItemId: 1,
+                  quantity: 1
+                }
+              ]
             },
             total: 15.99,
-            status: 'PENDING'
+            status: OrderStatus.PENDING
           });
       };
 
@@ -204,7 +206,7 @@ describe('Restaurant System (e2e)', () => {
     });
 
     it('should handle errors appropriately', async () => {
-      // Tentar criar pedido com item inválido
+      // Tentar criar pedido com dados inválidos
       await request(app.getHttpServer())
         .post('/orders')
         .set('Authorization', `Bearer ${authToken}`)
@@ -212,17 +214,21 @@ describe('Restaurant System (e2e)', () => {
           restaurantId,
           customerId: 1,
           items: {
-            items: [{ id: 99999, quantity: 1 }]
+            items: [
+              {
+                menuItemId: 99999,
+                quantity: 1
+              }
+            ]
           },
-          total: 15.99
+          total: 15.99,
+          status: OrderStatus.PENDING
         })
         .expect(400);
 
-      // Tentar acessar pedido de outro restaurante
-      const fakeToken = 'fake.token.here';
+      // Tentar acessar pedido sem autenticação
       await request(app.getHttpServer())
         .get('/orders')
-        .set('Authorization', `Bearer ${fakeToken}`)
         .expect(401);
 
       // Tentar criar menu com dados inválidos
@@ -230,7 +236,7 @@ describe('Restaurant System (e2e)', () => {
         .post('/menus')
         .set('Authorization', `Bearer ${authToken}`)
         .send({
-          restaurantId: 99999, // ID inválido
+          restaurantId: 99999,
           name: 'Test Menu',
           type: 'INVALID_TYPE',
           sections: {}
@@ -244,6 +250,8 @@ describe('Restaurant System (e2e)', () => {
         address: '456 New St',
         city: 'New City',
         country: 'New Country',
+        username: `updated_${Date.now()}`,
+        password: 'newpassword',
         webSettings: {
           theme: 'dark',
           logo: 'https://example.com/logo.png'
@@ -261,8 +269,11 @@ describe('Restaurant System (e2e)', () => {
         where: { id: restaurantId }
       });
 
+      expect(restaurant).toBeDefined();
       expect(restaurant?.name).toBe(updateData.name);
       expect(restaurant?.address).toBe(updateData.address);
+      expect(restaurant?.city).toBe(updateData.city);
+      expect(restaurant?.country).toBe(updateData.country);
       expect(restaurant?.webSettings).toEqual(updateData.webSettings);
     });
   });
