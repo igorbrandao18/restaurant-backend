@@ -1,100 +1,125 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# QIK Delivery - Restaurant Dashboard
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O QIK Delivery Restaurant Dashboard é uma aplicação web moderna desenvolvida para gerenciar restaurantes no sistema de delivery QIK. Esta interface permite que proprietários de restaurantes gerenciem seus menus, pedidos e configurações de forma eficiente e intuitiva.
 
-## Description
+## Funcionalidades Principais
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 1. Autenticação e Perfil
+- Login seguro para restaurantes
+- Gerenciamento de perfil do restaurante
+- Configurações personalizadas da conta
 
-## Project setup
+### 2. Gestão de Cardápio
+- Criação e edição de itens do menu
+- Organização por categorias
+- Upload de imagens dos produtos
+- Gestão de preços e disponibilidade
 
-```bash
-$ pnpm install
-```
+### 3. Gestão de Pedidos
+- Visualização em tempo real de novos pedidos
+- Sistema de status de pedidos (Novo, Em Preparo, Pronto para Entrega, Entregue)
+- Histórico completo de pedidos
+- Detalhes do cliente e endereço de entrega
 
-## Compile and run the project
+### 4. Dashboard e Relatórios
+- Visão geral das vendas
+- Métricas de desempenho
+- Relatórios personalizados
+- Análise de produtos mais vendidos
 
-```bash
-# development
-$ pnpm run start
+## Tecnologias Utilizadas
 
-# watch mode
-$ pnpm run start:dev
+- React.js
+- TypeScript
+- Material-UI
+- Redux Toolkit
+- React Router
+- Axios
+- Socket.io-client (para atualizações em tempo real)
 
-# production mode
-$ pnpm run start:prod
-```
+## Requisitos do Sistema
 
-## Run tests
+- Node.js 18.x ou superior
+- npm ou yarn
+- Navegador moderno (Chrome, Firefox, Safari, Edge)
 
-```bash
-# unit tests
-$ pnpm run test
+## Instalação
 
-# e2e tests
-$ pnpm run test:e2e
+1. Clone o repositório:
+\`\`\`bash
+git clone https://github.com/seu-usuario/qik-delivery-frontend.git
+cd qik-delivery-frontend
+\`\`\`
 
-# test coverage
-$ pnpm run test:cov
-```
+2. Instale as dependências:
+\`\`\`bash
+npm install
+# ou
+yarn install
+\`\`\`
 
-## Deployment
+3. Configure as variáveis de ambiente:
+\`\`\`bash
+cp .env.example .env
+\`\`\`
+Edite o arquivo .env com suas configurações
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+4. Inicie o servidor de desenvolvimento:
+\`\`\`bash
+npm run dev
+# ou
+yarn dev
+\`\`\`
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Scripts Disponíveis
 
-```bash
-$ pnpm install -g mau
-$ mau deploy
-```
+- \`npm run dev\`: Inicia o servidor de desenvolvimento
+- \`npm run build\`: Cria a build de produção
+- \`npm run lint\`: Executa o linter
+- \`npm run test\`: Executa os testes
+- \`npm run preview\`: Visualiza a build de produção localmente
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Estrutura do Projeto
 
-## Resources
+\`\`\`
+src/
+├── assets/         # Imagens, fontes e outros recursos estáticos
+├── components/     # Componentes React reutilizáveis
+├── contexts/      # Contextos React
+├── hooks/         # Hooks personalizados
+├── layouts/       # Layouts da aplicação
+├── pages/         # Componentes de página
+├── services/      # Serviços e integrações com API
+├── store/         # Configuração e slices do Redux
+├── styles/        # Estilos globais e temas
+├── types/         # Definições de tipos TypeScript
+└── utils/         # Funções utilitárias
+\`\`\`
 
-Check out a few resources that may come in handy when working with NestJS:
+## Integração com Backend
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+A aplicação se comunica com o backend através de uma API REST. Os endpoints principais são:
 
-## Support
+- Autenticação: \`/auth/login\`
+- Restaurantes: \`/restaurants\`
+- Menus: \`/menus\`
+- Pedidos: \`/orders\`
+- Endereços: \`/addresses\`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Contribuição
 
-## Stay in touch
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (\`git checkout -b feature/AmazingFeature\`)
+3. Commit suas mudanças (\`git commit -m 'Add some AmazingFeature'\`)
+4. Push para a branch (\`git push origin feature/AmazingFeature\`)
+5. Abra um Pull Request
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Suporte
 
-## License
+Para suporte, envie um email para support@qikdelivery.com ou abra uma issue no repositório.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-# restaurant-backend
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para mais detalhes. 
