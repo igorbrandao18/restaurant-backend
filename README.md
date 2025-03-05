@@ -207,6 +207,6 @@ A documentação da API está disponível em `/api-docs` utilizando Swagger UI.
 
 <div align="center">
 
-**Desenvolvido com ❤️ pela equipe QIK Delivery**
+**Desenvolvido com ❤️ por Igor Brandão**
 
 </div> 
