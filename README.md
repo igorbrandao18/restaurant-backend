@@ -1,198 +1,154 @@
-# QIK Delivery - Restaurant Dashboard
+# QIK Delivery - Restaurant Backend
 
 <div align="center">
 
 ![QIK Delivery Logo](https://your-logo-url.com/logo.png)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Material-UI](https://img.shields.io/badge/Material--UI-0081CB?style=flat&logo=material-ui&logoColor=white)](https://mui.com/)
-[![Redux](https://img.shields.io/badge/Redux-593D88?style=flat&logo=redux&logoColor=white)](https://redux.js.org/)
-[![Node.js CI](https://github.com/seu-usuario/qik-delivery-frontend/actions/workflows/node.js.yml/badge.svg)](https://github.com/seu-usuario/qik-delivery-frontend/actions/workflows/node.js.yml)
-[![codecov](https://codecov.io/gh/seu-usuario/qik-delivery-frontend/branch/main/graph/badge.svg)](https://codecov.io/gh/seu-usuario/qik-delivery-frontend)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Jest](https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white)](https://jestjs.io/)
+[![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=swagger&logoColor=black)](https://swagger.io/)
 
 </div>
 
 ## 📋 Índice
 
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Funcionalidades](#-funcionalidades)
+- [Sobre](#-sobre)
 - [Tecnologias](#-tecnologias)
-- [Começando](#-começando)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [API](#-api)
+- [Arquitetura](#-arquitetura)
+- [Instalação](#-instalação)
+- [Endpoints](#-endpoints)
 - [Testes](#-testes)
 - [Deploy](#-deploy)
-- [Contribuição](#-contribuição)
-- [Licença](#-licença)
-- [Contato](#-contato)
 
-## 🚀 Sobre o Projeto
+## 🚀 Sobre
 
-O QIK Delivery Restaurant Dashboard é uma plataforma web moderna e intuitiva desenvolvida para empoderar proprietários de restaurantes na gestão eficiente de seus estabelecimentos no sistema QIK Delivery. Com uma interface elegante e responsiva, oferecemos ferramentas poderosas para gerenciamento de cardápios, pedidos e análise de desempenho em tempo real.
-
-### ✨ Destaques
-
-- 🎯 Interface moderna e intuitiva
-- 📱 Design totalmente responsivo
-- ⚡ Performance otimizada
-- 🔒 Segurança robusta
-- 🌐 Suporte a múltiplos idiomas
-- 📊 Analytics em tempo real
-
-## 🎯 Funcionalidades
-
-### 🔐 Autenticação e Perfil
-- Sistema de autenticação seguro com JWT
-- Recuperação de senha via email
-- Perfil do restaurante personalizável
-- Configurações avançadas da conta
-
-### 📋 Gestão de Cardápio
-- Editor de cardápio intuitivo
-- Categorização de produtos
-- Sistema de variações e complementos
-- Gestão de estoque
-- Upload e otimização de imagens
-- Precificação dinâmica
-
-### 📦 Gestão de Pedidos
-- Dashboard em tempo real
-- Sistema de notificações
-- Impressão térmica de pedidos
-- Histórico detalhado
-- Métricas de tempo de preparo
-- Integração com sistemas de entrega
-
-### 📊 Analytics e Relatórios
-- Métricas de vendas em tempo real
-- Relatórios personalizáveis
-- Análise de tendências
-- Insights de produtos
-- Exportação em múltiplos formatos
-- Previsões baseadas em IA
+Backend do sistema QIK Delivery, desenvolvido com NestJS para fornecer uma API robusta e escalável para o gerenciamento de restaurantes, cardápios e pedidos. O sistema utiliza PostgreSQL como banco de dados e Prisma como ORM, garantindo tipo seguro e eficiência nas operações com o banco de dados.
 
 ## 🛠 Tecnologias
 
 ### Core
-- [TypeScript](https://www.typescriptlang.org/) - Linguagem principal
-- [React 18](https://reactjs.org/) - Framework UI
-- [Material-UI v5](https://mui.com/) - Design System
-- [Redux Toolkit](https://redux-toolkit.js.org/) - Gerenciamento de Estado
-- [React Query](https://react-query.tanstack.com/) - Gerenciamento de Estado do Servidor
+- **[NestJS](https://nestjs.com/)** - Framework Node.js progressivo
+- **[TypeScript](https://www.typescriptlang.org/)** - Superset JavaScript tipado
+- **[Prisma](https://www.prisma.io/)** - ORM moderno
+- **[PostgreSQL](https://www.postgresql.org/)** - Banco de dados relacional
+- **[JWT](https://jwt.io/)** - Autenticação e autorização
+- **[Swagger](https://swagger.io/)** - Documentação da API
 
-### Desenvolvimento
-- [Vite](https://vitejs.dev/) - Build tool
-- [ESLint](https://eslint.org/) - Linting
-- [Prettier](https://prettier.io/) - Code Formatting
-- [Husky](https://typicode.github.io/husky/) - Git Hooks
+### Segurança
+- **[Argon2](https://github.com/ranisalt/node-argon2)** - Hash de senhas
+- **[class-validator](https://github.com/typestack/class-validator)** - Validação de dados
+- **[class-transformer](https://github.com/typestack/class-transformer)** - Transformação de objetos
 
 ### Testes
-- [Jest](https://jestjs.io/) - Test Runner
-- [React Testing Library](https://testing-library.com/react) - Testes de Componentes
-- [Cypress](https://www.cypress.io/) - Testes E2E
+- **[Jest](https://jestjs.io/)** - Framework de testes
+- **[Supertest](https://github.com/visionmedia/supertest)** - Testes de API
 
-### Monitoramento
-- [Sentry](https://sentry.io/) - Error Tracking
-- [Google Analytics](https://analytics.google.com/) - Analytics
+## 🏗 Arquitetura
 
-## 🚦 Começando
+O projeto segue uma arquitetura modular com os seguintes módulos principais:
 
-### Pré-requisitos
+### Módulos
+- **Auth**: Autenticação e autorização
+- **Restaurant**: Gestão de restaurantes
+- **Menu**: Gestão de cardápios
+- **Order**: Gestão de pedidos
+- **Address**: Gestão de endereços
 
-- Node.js 18.x ou superior
-- npm ou yarn
-- Git
+### Estrutura de Diretórios
+\`\`\`
+src/
+├── controllers/     # Controladores da API
+├── services/       # Lógica de negócios
+├── dto/            # Objetos de transferência de dados
+├── prisma/         # Configuração e cliente Prisma
+├── filters/        # Filtros de exceção
+└── types/          # Tipos TypeScript
+\`\`\`
 
-### Instalação
+## 🚀 Instalação
 
 1. Clone o repositório
 \`\`\`bash
-git clone https://github.com/seu-usuario/qik-delivery-frontend.git
-cd qik-delivery-frontend
+git clone https://github.com/seu-usuario/restaurant-backend.git
+cd restaurant-backend
 \`\`\`
 
 2. Instale as dependências
 \`\`\`bash
 npm install
+# ou
+pnpm install
 \`\`\`
 
 3. Configure as variáveis de ambiente
 \`\`\`bash
-cp .env.example .env.local
+cp .env.example .env
 \`\`\`
 
-4. Inicie o servidor de desenvolvimento
+4. Configure o banco de dados
 \`\`\`bash
-npm run dev
+npx prisma migrate dev
 \`\`\`
 
-### Scripts Disponíveis
-
-\`\`\`json
-{
-  "dev": "Inicia o servidor de desenvolvimento",
-  "build": "Cria a build de produção",
-  "test": "Executa os testes unitários",
-  "test:e2e": "Executa os testes E2E",
-  "lint": "Executa o linter",
-  "format": "Formata o código",
-  "prepare": "Configura os hooks do Husky"
-}
+5. Inicie o servidor
+\`\`\`bash
+npm run start:dev
+# ou
+pnpm run start:dev
 \`\`\`
 
-## 📁 Estrutura do Projeto
+## 🔌 Endpoints
 
-\`\`\`
-src/
-├── assets/          # Recursos estáticos
-├── components/      # Componentes React
-│   ├── common/      # Componentes compartilhados
-│   ├── forms/       # Componentes de formulário
-│   └── layout/      # Componentes de layout
-├── config/          # Configurações da aplicação
-├── contexts/        # Contextos React
-├── features/        # Features por domínio
-├── hooks/           # Hooks personalizados
-├── lib/            # Bibliotecas e integrações
-├── pages/          # Componentes de página
-├── services/       # Serviços e API
-├── store/          # Store Redux
-├── styles/         # Estilos globais
-├── types/          # Tipos TypeScript
-└── utils/          # Utilitários
-\`\`\`
+### Auth
+- **POST** `/auth/login` - Autenticação de restaurante
 
-## 🔌 API
+### Restaurants
+- **POST** `/restaurants` - Criar restaurante
+- **GET** `/restaurants` - Listar restaurantes
+- **GET** `/restaurants/:id` - Obter restaurante
+- **PUT** `/restaurants/:id` - Atualizar restaurante
+- **GET** `/restaurants/profile` - Perfil do restaurante
+- **GET** `/restaurants/:id/menus` - Menus do restaurante
 
-### Endpoints Principais
+### Menus
+- **POST** `/menus` - Criar menu
+- **GET** `/menus` - Listar menus
+- **PUT** `/menus/:id` - Atualizar menu
 
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| POST | `/auth/login` | Autenticação |
-| GET | `/restaurants/profile` | Perfil do Restaurante |
-| GET | `/menus` | Lista de Menus |
-| POST | `/orders` | Criar Pedido |
-| GET | `/analytics` | Dados Analytics |
+### Orders
+- **POST** `/orders` - Criar pedido
+- **GET** `/orders` - Listar pedidos
+- **PUT** `/orders/:id` - Atualizar pedido
 
-[Documentação completa da API](https://api-docs.qikdelivery.com)
+### Addresses
+- **POST** `/addresses` - Criar endereço
+- **GET** `/addresses` - Listar endereços
+- **PUT** `/addresses/:id` - Atualizar endereço
 
 ## 🧪 Testes
 
 ### Unitários
 \`\`\`bash
 npm run test
+# ou
+pnpm run test
 \`\`\`
 
 ### E2E
 \`\`\`bash
 npm run test:e2e
+# ou
+pnpm run test:e2e
 \`\`\`
 
-### Coverage
+### Cobertura
 \`\`\`bash
-npm run test:coverage
+npm run test:cov
+# ou
+pnpm run test:cov
 \`\`\`
 
 ## 🚀 Deploy
@@ -200,44 +156,57 @@ npm run test:coverage
 ### Produção
 \`\`\`bash
 npm run build
-npm run deploy
+npm run start:prod
+# ou
+pnpm run build
+pnpm run start:prod
 \`\`\`
 
-### Staging
-\`\`\`bash
-npm run deploy:staging
+### Scripts Disponíveis
+\`\`\`json
+{
+  "build": "nest build",
+  "start": "nest start",
+  "start:dev": "nest start --watch",
+  "start:debug": "nest start --debug --watch",
+  "start:prod": "node dist/main",
+  "test": "jest",
+  "test:watch": "jest --watch",
+  "test:cov": "jest --coverage",
+  "test:e2e": "jest --config ./test/jest-e2e.json"
+}
 \`\`\`
 
-## 🤝 Contribuição
+## 📝 Variáveis de Ambiente
 
-1. Fork o projeto
-2. Crie sua Feature Branch (\`git checkout -b feature/AmazingFeature\`)
-3. Commit suas mudanças (\`git commit -m 'Add some AmazingFeature'\`)
-4. Push para a Branch (\`git push origin feature/AmazingFeature\`)
-5. Abra um Pull Request
+\`\`\`env
+# Banco de Dados
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
 
-### Guia de Contribuição
+# JWT
+JWT_SECRET="seu-secret-jwt"
 
-Por favor, leia nosso [Guia de Contribuição](CONTRIBUTING.md) para detalhes sobre nosso código de conduta e o processo para submeter Pull Requests.
+# Servidor
+PORT=3000
+NODE_ENV=development
+\`\`\`
 
-## 📄 Licença
+## 🔒 Segurança
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
+- Autenticação via JWT
+- Hash de senhas com Argon2
+- Validação de dados com class-validator
+- Guards para proteção de rotas
+- Filtros de exceção globais
 
-## 📞 Contato
+## 📚 Documentação
 
-QIK Delivery - [@qikdelivery](https://twitter.com/qikdelivery)
-
-Suporte: support@qikdelivery.com
-
-Link do Projeto: [https://github.com/seu-usuario/qik-delivery-frontend](https://github.com/seu-usuario/qik-delivery-frontend)
+A documentação da API está disponível em `/api-docs` utilizando Swagger UI.
 
 ---
 
 <div align="center">
 
-**Feito com ❤️ pela equipe QIK Delivery**
-
-[Website](https://qikdelivery.com) · [Blog](https://blog.qikdelivery.com) · [Twitter](https://twitter.com/qikdelivery)
+**Desenvolvido com ❤️ pela equipe QIK Delivery**
 
 </div> 
